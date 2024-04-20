@@ -4,16 +4,15 @@ import { Users } from "../../../entity/User";
 
 
 
-export async function POST(res:NextResponse, req:Request) {
+export async function POST(req:Request) {
     try {
         console.log('iniciando')
          //Inicializa o AppDataSource
         const conection = await getDBConnection();
         const users = conection.getRepository(Users);
         const data = await req.json()
-        const email = 'jo'
-        const password = ''
-        console.log({data})
+        const email = data.email
+        const password = data.password
         const user = await users.manager.findOne(Users,{
             where:{
             email:email 
@@ -29,7 +28,7 @@ export async function POST(res:NextResponse, req:Request) {
                 return NextResponse.json({auth: false, message:"falha na solicitação"})
             }
         }else{
-            return NextResponse.json({ auth: false, message: "Usuário não encontrado",data});
+            return NextResponse.json({ auth: false, message: "Usuário não encontrado"});
         }        
     } catch (error) {
         // Em caso de erro, retorna uma NextResponseposta de erro
