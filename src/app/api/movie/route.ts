@@ -19,34 +19,33 @@ export async function GET() {
         return NextResponse.json({ auth: false, message: "Falha ao buscar os filmes" });
     }
 }
-// export async function POST(req:NextApiRequest, res:NextResponse) {
-//     try {
-//         const conection = await getDBConnection();
-//         const movie = new Movie()
-//         console.log(req.body)
-//         movie.title = req.body.title;
-//         movie.gender = req.body.gender;
-//         movie.classification = req.body.classification;
-//         movie.subtitle = req.body.subtitle;
-//         movie.image = req.body.image;
-//         movie.releasedate = req.body.releasedate;
-//         movie.director = req.body.director;
-//         movie.writer = req.body.writer;
-//         movie.studio = req.body.studio;
-//         movie.actors = req.body.actors;
-//         movie.resume = req.body.resume;
-//         movie.awards = req.body.awards;
-//         movie.note = req.body.note;
-//         if (!movie.title){
-//            return NextResponse.json({message:"Campo obrigatório"})
-//         }else{
-//             await conection.manager.save(movie)
-//             return NextResponse.json({message:"adiconado com sucesso: ",movie})
-//         }
+export async function POST(req:Request) {
+    try {
+        const conection = await getDBConnection();
+        const movie = new Movie()
+        const data = await req.json()
+        movie.title = data.title;
+        movie.gender = data.gender;
+        movie.classification = data.classification;
+        movie.subtitle = data.subtitle;
+        movie.image = data.image;
+        movie.releasedate = data.releasedate;
+        movie.director = data.director;
+        movie.writer = data.writer;
+        movie.studio = data.studio;
+        movie.actors = data.actors;
+        movie.resume = data.resume;
+        movie.awards = data.awards;
+        movie.note = data.note;
+        if (!movie.title){
+           return NextResponse.json({message:"Campo obrigatório"})
+        }else{
+            await conection.manager.save(movie)
+            return NextResponse.json({"status":"200", message:"adiconado com sucesso: ",movie})
+        }
        
-//         } catch (error) {
-//             console.error('Erro:', error);
-//             return NextResponse.json({ auth: false, message: "Falha ao adicionar o filme" });
-//     }
-    
-// }
+        } catch (error) {
+            console.error('Erro:', error);
+            return NextResponse.json({ "status":"500", message: "Falha ao adicionar o filme" });
+    }
+}

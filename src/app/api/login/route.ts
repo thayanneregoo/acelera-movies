@@ -3,7 +3,6 @@ import { getDBConnection } from "../../../data-source";
 import { Users } from "../../../entity/User";
 
 
-
 export async function POST(req:Request) {
     try {
         console.log('iniciando')
@@ -20,7 +19,7 @@ export async function POST(req:Request) {
         })
         if (user){
             if (user.password == password){
-                return NextResponse.json({auth: true ,message: "Usuário encontrado"}); // quando o dado é estático não funciona
+                return NextResponse.json({"status":"200",auth: true ,message: "Usuário encontrado"}); // quando o dado é estático não funciona
             }
             else if(user.email == email && user.password == password) {
                 return NextResponse.json({auth: false, message:"password incorreta"})
@@ -33,7 +32,7 @@ export async function POST(req:Request) {
     } catch (error) {
         // Em caso de erro, retorna uma NextResponseposta de erro
         console.error('Erro:', error);
-        return NextResponse.json({ auth: false, message: "Falha ao buscar os usuarios" })
+        return NextResponse.json({ "status":"500",auth: false, message: "Falha ao buscar os usuarios" })
     }
 }
 
