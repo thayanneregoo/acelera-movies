@@ -1,10 +1,36 @@
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [email,setEmail] = useState()
+  const [password,setPassword] = useState()
+
+  const onClick = () =>{
   
+  }
+  const  user:Promise<any> =fetch("http://localhost:3000/api/login",{
+    method:"POST",
+    body: JSON.stringify({
+      "email":"joana@example.com",
+      "password":"senha13"})}).then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao fazer requisição');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    })
+    user.then(userData => {
+      console.log("resultado",userData); // Aqui você pode manipular os dados do usuário retornado pela requisição
+  })
   return (
 
-    <main>
+    <main>  
+      <form>
+        {/* <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/> */}
+        {/* <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/> */}
+      </form>
 
     </main>
     
