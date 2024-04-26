@@ -16,8 +16,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { Card, Rating } from "@mui/material";
+import { dateformat } from "@/components/dateformat";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 export default function login() {
   const [movies,setMovies] = useState([])
@@ -38,11 +40,11 @@ return(
     <>
     <main>
       <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar
+        <CssBaseline />
+        <AppBar
         position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-      >
+        >
         <Toolbar>
           <Typography variant="h5" noWrap component="div">
             Acelera Movies
@@ -64,7 +66,7 @@ return(
         <Toolbar />
         <Divider />
         <List>
-          {[ 'Hello User'].map((text, index) => (
+          {[`Hello`].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 {/* <ListItemIcon>
@@ -96,26 +98,38 @@ return(
         <Toolbar />
        
         <section>
-      <ul>
+      <Box 
+      component="ul" 
+      sx={{boxSizing: 'border-box'}}
+      >
         {movies.map((movie:any) => (
       <>
+      <Card variant="outlined" 
+      sx={{ display: 'flex', maxWidth:`100vh`, marginBottom: '16px' }}
+      style={{  }}>
       <Image
               src={`${movie.image}`}
               alt={`${movie.title}`}
               className=""
-              width={100}
+              width={200}
               height={24}
               priority
       />
-      <li>{movie.title} adiconar aqui as estrelas</li>
-      <li>{movie.releasedate}</li>
-      <Typography paragraph>
-        <li>Resume</li>
+      <Typography paragraph sx={{marginLeft:'12px'}}>
+      <Typography    variant="h5" component="div" sx={{display:'flex',justifyContent: 'space-between', marginRight:'2rem'}} >
+          {movie.title}   
+          <Rating name="half-rating" defaultValue={movie.note/2} precision={0.5} />
+      </Typography>
+      <li>Date: {dateformat(`${movie.releasedate}`)}</li>
+      
+        <li><strong>Resumo</strong></li>
         <li>{movie.resume}</li>
       </Typography>
+     
+      </Card>
       </>
       ))}
-      </ul>
+      </Box>
       </section>
         {/* </Typography> */}
 

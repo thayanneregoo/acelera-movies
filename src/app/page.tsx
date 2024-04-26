@@ -3,12 +3,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
 export default function Home() {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const router = useRouter()
   const [displayError, setDisplayError] = useState<string>("hidden")
+  
+ const [name, setName] = useState('')
+
 
   const click =  async() => {
     console.log('Buscando usuário');
@@ -23,6 +25,7 @@ export default function Home() {
         });
         const userData = await userResponse.json();
         if (await userData.status==200){
+          setName(userData.name)
           router.push('/movies')
         }else{
           setDisplayError("")
