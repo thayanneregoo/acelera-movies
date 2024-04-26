@@ -18,13 +18,10 @@ export async function POST(req:Request) {
         }
         })
         if (user){
-            if (user.password == password){
-                return NextResponse.json({"status":"200",auth: true ,message: "Usuário encontrado"}); // quando o dado é estático não funciona
-            }
-            else if(user.email == email && user.password == password) {
-                return NextResponse.json({auth: false, message:"password incorreta"})
+            if (user.email == email && user.password == password){
+                return NextResponse.json({"status":"200",auth: true ,message: "Usuário encontrado"}); 
             }else{
-                return NextResponse.json({auth: false, message:"falha na solicitação"})
+                return NextResponse.json({"status":"404",auth: false, message:"falha na solicitação"})
             }
         }else{
             return NextResponse.json({ auth: false, message: "Usuário não encontrado"});
