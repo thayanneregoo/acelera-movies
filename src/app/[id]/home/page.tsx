@@ -48,7 +48,7 @@ return(
         position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
         >
-        <Toolbar>
+        <Toolbar sx={{bgcolor:'#524E4E'}}>
           <Typography variant="h5" noWrap component="div">
             Acelera Movies
           </Typography>
@@ -61,14 +61,14 @@ return(
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-          },
+            backgroundColor:'gray',          },
         }}
         variant="permanent"
         anchor="left"
       >
         <Toolbar />
         <Divider />
-        Hello {userName}
+        Olá {userName}
         <Divider />
         
         Adicionar Filme
@@ -92,8 +92,8 @@ return(
         mw:`100vh`, 
         mb: '16px', 
         bgcolor: '#524E4E', 
-        color: 'white',
-        border:'20rem' }}
+        border:'20rem',
+        boxShadow:3 }}
       style={{  }}>
       <Image
               src={`${movie.image}`}
@@ -104,7 +104,13 @@ return(
               priority
       />
       <Typography paragraph sx={{marginLeft:'12px'}}>
-      <Typography    variant="h5" component="div" sx={{display:'flex',justifyContent: 'space-between', marginRight:'2rem'}} >
+      <Typography    
+        variant="h5" 
+        component="div" 
+        sx={{display:'flex',
+            justifyContent: 'space-between', 
+            marginRight:'2rem'}} >
+
           {movie.title}   
           <Rating name="rating" defaultValue={movie.note/2} precision={0.5} />
       </Typography>
