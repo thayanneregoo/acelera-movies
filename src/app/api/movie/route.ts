@@ -1,8 +1,7 @@
 // o nome desse arquivo é definido por padrão
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getDBConnection } from "../../../data-source";
 import { Movie } from "../../../entity/Movie";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET() {
     try {

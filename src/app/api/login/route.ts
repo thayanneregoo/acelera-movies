@@ -19,7 +19,7 @@ export async function POST(req:Request) {
         })
         if (user){
             if (user.email == email && user.password == password){
-                return NextResponse.json({"status":"200",auth: true ,message: "Usuário encontrado", name:user.firstName}); 
+                return NextResponse.json({"status":"200",auth: true ,message: "Usuário encontrado", id:user.id}); 
             }else{
                 return NextResponse.json({"status":"404",auth: false, message:"falha na solicitação"})
             }
