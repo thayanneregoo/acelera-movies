@@ -15,14 +15,29 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-import { Card, Rating, colors } from "@mui/material";
+import { Button, Card, Modal, Rating, TextField, colors } from "@mui/material";
 import { dateformat } from "@/lib/dateformat";
 
 const drawerWidth = 200;
-
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: '#524E4E',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  alingitems:'center'
+  };
+//adicionar o modal a um component
 export default function Home({ params }: { params: { id: number } }) {
   const [movies,setMovies] = useState([])
   const [userName, setUserName] = useState('')
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     async function carregaRepositorios () {
@@ -34,8 +49,6 @@ export default function Home({ params }: { params: { id: number } }) {
       const userData = await fetch(`http://localhost:3000/api/login/${id}`)
       const user = await userData.json()
       setUserName(user.name)
-      console.log('dsdssds', user)
-      console.log(userData)
     }
     carregaRepositorios();
   }, [])
@@ -61,21 +74,48 @@ return(
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor:'gray',          },
+            backgroundColor:'white',          },
         }}
         variant="permanent"
         anchor="left"
       >
         <Toolbar />
-        <Divider />
+        
         Olá {userName}
         <Divider />
-        
-        Adicionar Filme
+        <div>
+          <Button onClick={handleOpen} sx={{color:'black'
+          }}>Adicionar Filme</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Adicione Novo Filme
+                </Typography>
+                <TextField
+                required
+                id="outlined-required"
+                label="Obrigatório"
+                placeholder="informe"
+                />
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              </Typography>
+              <form>
+
+              </form>
+            </Box>
+          </Modal>
+        </div>
+      
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'black', p: 3 }}
+        sx={{ flexGrow: 1, bgcolor: 'white', p: 3 }}
       >
         <Toolbar />
        
@@ -86,22 +126,24 @@ return(
       >
         {movies.map((movie:any) => (
       <>
+      <a href={`/movie/${movie.id}`} >
       <Card variant="outlined" 
       sx={{ 
         display: 'flex', 
         mw:`100vh`, 
         mb: '16px', 
-        bgcolor: '#524E4E', 
+        bgcolor: 'white', 
         border:'20rem',
         boxShadow:3 }}
-      style={{  }}>
+      >
+        
       <Image
-              src={`${movie.image}`}
-              alt={`${movie.title}`}
-              className=""
-              width={200}
-              height={24}
-              priority
+        src={`${movie.image}`}
+        alt={`${movie.title}`}
+        className=""
+        width={200}
+        height={24}
+        priority
       />
       <Typography paragraph sx={{marginLeft:'12px'}}>
       <Typography    
@@ -115,12 +157,12 @@ return(
           <Rating name="rating" defaultValue={movie.note/2} precision={0.5} />
       </Typography>
       <li>Date: {dateformat(`${movie.releasedate}`)}</li>
-      
-        <li><strong>Resumo</strong></li>
-        <li>{movie.resume}</li>
+      <li><strong>Resumo</strong></li>
+      <li>{movie.resume}</li>
       </Typography>
-     
+    
       </Card>
+      </a>
       </>
       ))}
       </Box>
